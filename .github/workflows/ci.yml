@@ -1,0 +1,58 @@
+name: Checks and plugin build
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  server:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        node: ['22', '24']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm test
+        working-directory: mql5-language-server
+      - run: python3 mql5-language-server/scripts/test_declarations.py
+  plugin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download pinned IntelliJ SDK
+        env:
+          IDEA_SDK_DIR: ${{ runner.temp }}/mql5-idea-sdk
+        run: |
+          mkdir -p "$IDEA_SDK_DIR"
+          curl --fail --location --retry 3 https://download.jetbrains.com/idea/ideaIU-2025.3.1.tar.gz -o "$RUNNER_TEMP/idea.tar.gz"
+          tar -xzf "$RUNNER_TEMP/idea.tar.gz" -C "$IDEA_SDK_DIR" --strip-components=1
+      - name: Build and test plugin
+        run: python3 mql5-intellij/build.py --ide "$RUNNER_TEMP/mql5-idea-sdk"
+      - name: Verify API compatibility
+        run: |
+          curl --fail --location --retry 3 https://github.com/JetBrains/intellij-plugin-verifier/releases/download/1.410/verifier-cli-1.410-all.jar -o "$RUNNER_TEMP/verifier.jar"
+          "$RUNNER_TEMP/mql5-idea-sdk/jbr/bin/java" -jar "$RUNNER_TEMP/verifier.jar" check-plugin mql5-intellij/dist/mql5-intellij-0.4.3.zip "$RUNNER_TEMP/mql5-idea-sdk" -verification-reports-dir "$RUNNER_TEMP/verifier-reports"
+          python3 scripts/check-verifier.py "$RUNNER_TEMP/verifier-reports"
+      - run: python3 scripts/package-source.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mql5-intellij-build
+          path: |
+            mql5-intellij/dist/
+            dist/
+            ${{ runner.temp }}/verifier-reports/

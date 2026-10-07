@@ -1,0 +1,31 @@
+{
+  "name": "mql5-language-server",
+  "version": "0.3.3",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "bin": {
+    "mql5-language-server": "src/server.mjs"
+  },
+  "scripts": {
+    "start": "node src/server.mjs",
+    "test": "node --test test/*.test.mjs"
+  },
+  "description": "MQL5 language server bundled with the MQL5 IntelliJ plugin",
+  "license": "MIT",
+  "author": "Aleksey",
+  "keywords": [
+    "mql5",
+    "intellij",
+    "language-server",
+    "lsp"
+  ],
+  "files": [
+    "src/",
+    "data/",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md"
+  ]
+}

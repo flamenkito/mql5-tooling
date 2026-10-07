@@ -1,0 +1,33 @@
+<idea-plugin>
+  <id>local.fxpro.mql5</id>
+  <name>MQL5</name>
+  <version>0.4.3</version>
+  <vendor>Aleksey</vendor>
+  <description><![CDATA[
+    <p>MQL5 editing support for .mq5 and .mqh files.</p>
+    <ul>
+      <li>Syntax highlighting for keywords, built-in types, functions, constants, input variables and macros.</li>
+      <li>Bundled language server: completion, navigation, references, hover documentation and signature help.</li>
+      <li>API signatures and enum descriptions imported from the official MQL5 CHM reference.</li>
+      <li>Configurable standard-library include paths and optional external compiler bridge.</li>
+    </ul>
+    <p>Language-server features require Node.js 22+ and an IDE with IntelliJ LSP support.
+    Highlighting works without LSP. This is a declaration indexer, not a full MQL5 compiler.</p>
+    <p>Independent project; not affiliated with JetBrains or MetaQuotes. Licensed under MIT.</p>
+  ]]></description>
+  <change-notes><![CDATA[<p>0.4.3: fixes local HTML reference links and adds CHM documentation for every imported function, including parameters, return values and notes. MIT license and portable build.
+  Includes API overloads, enum documentation and input/macro highlighting.</p>]]></change-notes>
+  <idea-version since-build="253" until-build="253.*"/>
+  <depends>com.intellij.modules.platform</depends>
+  <depends optional="true" config-file="mql5-lsp.xml">com.intellij.modules.lsp</depends>
+  <extensions defaultExtensionNs="com.intellij">
+    <fileType name="MQL5" language="MQL5" implementationClass="local.fxpro.mql5.MqlFileType" fieldName="INSTANCE" extensions="mq5;mqh"/>
+    <lang.syntaxHighlighterFactory language="MQL5" implementationClass="local.fxpro.mql5.MqlHighlighterFactory"/>
+    <lang.parserDefinition language="MQL5" implementationClass="local.fxpro.mql5.MqlParserDefinition"/>
+    <colorSettingsPage implementation="local.fxpro.mql5.MqlColorSettings"/>
+    <lang.commenter language="MQL5" implementationClass="local.fxpro.mql5.MqlCommenter"/>
+    <lang.braceMatcher language="MQL5" implementationClass="local.fxpro.mql5.MqlBraceMatcher"/>
+    <applicationService serviceImplementation="local.fxpro.mql5.MqlSettings"/>
+    <applicationConfigurable id="mql5.settings" displayName="MQL5" parentId="language" instance="local.fxpro.mql5.MqlConfigurable"/>
+  </extensions>
+</idea-plugin>

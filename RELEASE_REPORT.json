@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-06",
+  "plugin": "0.4.3",
+  "server": "0.3.3",
+  "license": "MIT",
+  "plugin_sha256": "28fee2f2a221bdf0473d633477352874f353c1bcb9af298ea00467eeedf8a231",
+  "checks": {
+    "standalone_build": true,
+    "java_checks": 754042,
+    "fuzz_cases": 400,
+    "node_tests": 19,
+    "python_tests": 5,
+    "plugin_verifier": "Compatible: IU-253.29346.138 / Plugin Verifier 1.410 / plugin 0.4.3",
+    "packaged_source_and_catalog_match": true,
+    "markdown_preview": "Rendered with installed IntelliJ CommonMark converter and Swing; enum/constants visually inspected",
+    "github_ci_executed": false,
+    "actual_ide_click_tested": false,
+    "published": false,
+    "function_summaries": "559/559 imported CHM functions",
+    "local_link": "Actual IntelliJ DocMarkdown converter and handler browser-dispatch regression passed",
+    "real_corpus_files": 118,
+    "local_help_discovery": "Verified at fxpro root, windows-projects, and mt5-fibo-readout after consolidation",
+    "public_language": "English-only public docs, source comments, and fixture spelling audited; external data values preserved"
+  },
+  "links": {
+    "ENUM_TIMEFRAMES": "https://www.mql5.com/en/docs/constants/chartconstants/enum_timeframes",
+    "ENUM_BASE_CORNER": "https://www.mql5.com/en/docs/constants/objectconstants/enum_basecorner"
+  },
+  "remaining": [
+    "Set public repository URL once selected",
+    "Run GitHub CI after uploading sources",
+    "Capture screenshots and click-test documentation in user IDE",
+    "Optional author signing; ZIP currently unsigned",
+    "Upload first release manually to JetBrains Marketplace"
+  ]
+}

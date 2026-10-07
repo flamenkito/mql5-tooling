@@ -1,0 +1,15 @@
+.idea/
+*.iml
+.DS_Store
+**/__pycache__/
+**/node_modules/
+**/dist/
+**/reference/
+*.pem
+*.key
+*.crt
+.env
+.env.*
+verification-*/
+local-archive/
+/mql5-language-server/data/reference.json
